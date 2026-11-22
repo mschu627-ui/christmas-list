@@ -76,3 +76,23 @@ textarea { resize: vertical; }
 #photo-preview { max-width: 5rem; max-height: 4rem; vertical-align: middle; margin-right: .5rem; }
 #remove-name { margin-top: .5rem; overflow-wrap: anywhere; }
 @media (max-width: 480px) { main { margin-top: 1.7rem; } }
+
+.list-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
+
+@media print {
+  @page { margin: 14mm; }
+  .hero { display: block; min-height: 0; padding: 0; background: none; border-bottom: 1px solid var(--border); }
+  .title-card { width: auto; padding: 0 0 .7rem; background: none; text-align: left; outline: none; box-shadow: none; }
+  .hero .ornament, .list-actions, .card-actions button,
+  #status, #empty, footer, dialog { display: none; }
+  h1 { font-size: 28pt; }
+  h2 { font-size: 16pt; }
+  main { width: auto; margin: .8rem 0 0; }
+  .list-header { padding-bottom: .5rem; }
+  .grid { display: block; margin-top: .8rem; }
+  .card { display: flex; flex-direction: row; align-items: flex-start; break-inside: avoid; margin-bottom: .65rem; }
+  .card img { width: 7rem; height: 7rem; flex-shrink: 0; background: none; }
+  .card-body { padding: .55rem .75rem; gap: .2rem; }
+  .card-actions { margin-top: 0; }
+  .shop { color: var(--wine); text-decoration: underline; }
+}
