@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#531923">
+<title>My Christmas List</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="hero">
+  <div class="title-card"><div class="ornament" aria-hidden="true">✦</div><h1>My Christmas List</h1></div>
+</header>
+<main>
+  <div class="list-header">
+    <div><h2>Wishlist</h2><p id="count"></p></div>
+    <button id="add" class="primary" type="button">+ Add gift</button>
+  </div>
+  <p id="status" role="status"></p>
+  <section id="empty" class="empty">
+    <div class="ornament" aria-hidden="true">✦</div>
+    <h3>Your list is empty</h3>
+    <p>Add a gift to save its photo, size, and shopping link.</p>
+    <button id="first" type="button">Add your first gift</button>
+  </section>
+  <div id="gifts" class="grid"></div>
+  <footer>Saved in this browser on this device.</footer>
+</main>
+<dialog id="editor" aria-labelledby="editor-title">
+  <form id="gift-form">
+    <div class="dialog-header"><h2 id="editor-title"></h2><button id="close" type="button" aria-label="Close">×</button></div>
+    <label>Gift name<input name="name" required maxlength="120" placeholder="Wool scarf" autofocus></label>
+    <div class="fields">
+      <label>Size<input name="size" maxlength="60" placeholder="One size"></label>
+      <label>Colour<input name="colour" maxlength="60" placeholder="Burgundy"></label>
+    </div>
+    <label>Price (CAD)<input name="price" type="number" min="0" max="999999" step="0.01" placeholder="0.00"></label>
+    <label>Shopping link<input name="link" type="url" placeholder="https://"></label>
+    <label>Photo link<input name="photo" type="url" placeholder="https://"></label>
+    <label>Or upload a photo<input name="upload" type="file" accept="image/*"></label>
+    <div id="photo-tools" hidden><img id="photo-preview" alt="Current gift photo"><button type="button" id="clear-photo">Remove photo</button></div>
+    <label>Notes<textarea name="notes" maxlength="600" rows="2" placeholder="Anything else to remember"></textarea></label>
+    <p id="error" role="alert"></p>
+    <div class="actions"><button id="cancel" type="button">Cancel</button><button class="primary" id="save" type="submit">Save gift</button></div>
+  </form>
+</dialog>
+<dialog id="remove-dialog" aria-labelledby="remove-title">
+  <form method="dialog">
+    <h2 id="remove-title">Remove gift?</h2>
+    <p id="remove-name"></p>
+    <div class="actions"><button value="cancel" autofocus>Cancel</button><button class="primary" value="remove">Remove gift</button></div>
+  </form>
+</dialog>
+</body>
+</html>
