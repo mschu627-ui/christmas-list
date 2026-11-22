@@ -46,13 +46,14 @@ function webAddress(value) {
 function render() {
   byId("count").textContent = gifts.length + (gifts.length === 1 ? " gift" : " gifts");
   byId("empty").hidden = gifts.length > 0;
+  byId("share").hidden = gifts.length === 0;
+  byId("export").hidden = gifts.length === 0;
   const cards = gifts.map((gift) => {
     const card = element("article", "card");
     if (gift.image) {
       const photo = element("img");
       photo.alt = gift.name;
-      photo.loading = "lazy";
-      photo.addEventListener("error", () => photo.remove());
+      photo.addEventListener("error", () => { photo.hidden = true; });
       photo.src = gift.image;
       card.append(photo);
     }
@@ -153,6 +154,43 @@ removeDialog.addEventListener("close", () => {
     byId("status").textContent = error.message;
   }
 });
+
+function downloadSharePage() {
+  const cards = byId("gifts").cloneNode(true);
+  cards.querySelectorAll("button").forEach((button) => button.remove());
+  cards.querySelectorAll("img").forEach((photo) => { photo.hidden = false; });
+  const count = byId("count").textContent;
+  const page = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Christmas List</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="title-card"><div class="ornament" aria-hidden="true">✦</div><h1>My Christmas List</h1></div>
+</header>
+<main>
+  <div class="list-header"><div><h2>Wishlist</h2><p id="count">${count}</p></div></div>
+  ${cards.outerHTML}
+</main>
+</body>
+</html>`;
+  const url = URL.createObjectURL(new Blob([page], { type: "text/html;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "wishlist.html";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  byId("status").textContent = "Upload wishlist.html beside index.html on GitHub, then open wishlist.html at your GitHub Pages address.";
+}
+
+byId("export").addEventListener("click", downloadSharePage);
+byId("share").addEventListener("click", () => window.print());
 
 for (const id of ["add", "first"]) byId(id).addEventListener("click", () => openEditor());
 for (const id of ["close", "cancel"]) byId(id).addEventListener("click", () => editor.close());
